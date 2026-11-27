@@ -7,7 +7,9 @@ import FormNovaOrdem from "@/components/FormNovaOrdem";
 // ?equipamento=ID vem do botão "Abrir ordem de serviço" da página do equipamento
 export default async function NovaOrdemPage({ searchParams }: { searchParams: Promise<{ equipamento?: string }> }) {
   const session = await getServerSession(authOptions);
-  if (!session || session.user.role !== "admin") redirect("/ordens");
+  if (!session || session.user.role !== "admin"
+    || (session.user.role !== "admin" && 
+    session.user.role !== "tecnico")) redirect("/ordens");
 
   const { equipamento } = await searchParams;
 
